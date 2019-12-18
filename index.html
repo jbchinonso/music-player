@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>music player</title>
+</head>
+   <!--<input id="getAudio" type="file" value="Add Song" accept="mp3"> -->
+   <div id="container">
+        <main id="tray">
+            <div class="sidebar">
+                <div class="logo">Sound Camp <span class="logo-span">Music Player</span></div>
+                <input id="getAudio" type="file"  accept="audio/*">
+                <label for="getAudio" class="addSong">Add a Song</label>
+                <ul id="playlist"></ul>
+            </div>
+            <div class="display">
+                <video src="media/horizontal fractal.mp4" class="vidbackground" loop></video>
+            </div>
+
+        </main>
+        <section id="player-tools">
+            <div id="progressBar">
+                <div class="progress"></div>
+            </div>
+            <div class="controls">
+                <div class="control-holder">
+                    <input type="button" id="previous"  />
+                    <input type="button" id="play" />
+                    <input type="button" id="pause"  />
+                    <input type="button" id="stop"  />
+                    <input type="button" id="next" />
+                    <input type="button" id="mute" />
+                    <input type="range" id="volume" min="0" max="10"/>
+                </div>
+                
+            </div>
+        </section>
+        
+   </div>
+    
+   
+<body>
+    <script src="main.js"></script>
+</body>
+</html>
