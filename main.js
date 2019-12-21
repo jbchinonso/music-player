@@ -92,8 +92,13 @@ function showDuration(){
             document.querySelector('.progress').style.width = value + '%'
             document.querySelector('.progress').style.height = '8px'
         }
-
+       
     })
+}
+
+//Go to the next song when the current song ends
+song.onended = function(){
+    nextbtn()
 }
 
 // stop button
@@ -167,6 +172,13 @@ function previousbtn(){
         showDuration()
         
     }
+}
+
+// volume Adjustment function
+function volume(){
+   const volumebtn = document.getElementById('volume')
+   let maxvol = volumebtn.getAttribute('max')
+   song.volume = parseFloat(volumebtn.value/maxvol)
 }
 
 
