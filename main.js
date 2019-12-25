@@ -2,15 +2,9 @@ let file, song, reader
 
 let playlist = document.getElementById('playlist');
 const addSong = document.getElementById('getAudio')
-const stop = document.getElementById('stop')
-const play = document.getElementById('play')
-const pause = document.getElementById('pause')
-const next = document.getElementById('next')
-const  previous = document.getElementById('previous')
+const levels = document.querySelector('.display video')
 
-
-
-
+// add songs to playlist when file button is clicked
 addSong.addEventListener('change', function(e){
     file = e.currentTarget.files[0]
     
@@ -47,58 +41,99 @@ addSong.addEventListener('change', function(e){
 function initialiazer(file, audioFile){
     reader = new FileReader()
     song = new Audio(audioFile)
+    song.volume = 0.5
     song.play()
     play.style.display = 'none'
     pause.style.display = 'inline'
     playlist.firstChild.classList.add('active')
-    playBackground()
-
-    
+    //play background video while song plays
+    levels.play()
+    //show the song duration
+    showDuration()
 }
 
 
-
+//make the songs in the playlist playable
 function selectSong(){
+    //select all the songs in the playlist
     const tracks = document.querySelectorAll('.track')
+    //set song Attribute to each of the tracks in the playlist
     tracks.forEach((track)=>{
         track.addEventListener('click',function(){
             song.pause()
-            song.currentTimeStamp = 0
+            song.currentTime = 0
             song = new Audio(track.getAttribute('song'))
+            song.volume = 0.5
             song.play()
            // track.previousSibling.classList.remove('active')
             document.querySelector('.active').classList.remove('active')
             track.classList.add('active')
-           
+            
 
         })
     })
 }
 
 
+//show the duration of the song while if plays
+function showDuration(){
+    //start a timer once the song starts
+   song.addEventListener('timeupdate',function(){
+        let value
+        // get hour,minute and seconds of the song
+        let h = Math.floor(song.currentTime / 3600)
+        let m = parseInt(song.currentTime / 60)
+        let s = parseInt(song.currentTime % 60 )
+        //attach zero to the value when it is less than 10
+        if (m < 10) m = '0' + m
+        if (s < 10) s = '0' + s
+        if (h < 10) h = '0' + h
+        document.querySelector('.duration').textContent = h + ':'+ m +':' + s
+        //start showing the progress once the song starts
+        if(song.currentTime > 0){
+            //calculate the percentage of the song played
+            value = (100/song.duration)*song.currentTime
+            // set the progress to the percentage of song played
+            document.querySelector('.progress').style.width = value + '%'
+            document.querySelector('.progress').style.height = '8px'
+            //Go to the next song when the current song ends
+            const nowplaying = document.querySelector('.active')
+            if(song.ended && nowplaying.nextElementSibling) nextbtn()
+        }
+       
+    })
+}
 
-
-stop.addEventListener('click', (e) =>{
+// stop button
+function stopbtn(){
     song.pause()
+    levels.pause()
     song.currentTime = 0
     play.style.display = 'inline'
     pause.style.display = 'none'
-})
+    
+}
 
-play.addEventListener('click',(e)=>{
+//play button
+function playbtn(){
     song.play()
+    levels.play()
     play.style.display = 'none'
     pause.style.display = 'inline'
+}
 
-})
-
-pause.addEventListener('click',(e)=>{
+// pause button
+function pausebtn(){
     song.pause()
+    levels.pause()
     play.style.display = 'inline'
     pause.style.display = 'none'
-})
+}
 
-next.addEventListener('click',(e)=>{
+
+// next button
+function nextbtn(){
+
     if(playlist.childElementCount > 1){
         const crntSong = document.querySelector('.active')
         let nextSong
@@ -111,14 +146,17 @@ next.addEventListener('click',(e)=>{
         song.pause()
         song.currentTime = 0
         song = new Audio(nextSong.getAttribute('song'))
+        song.volume = 0.5
         crntSong.classList.remove('active')
         nextSong.classList.add('active')
         song.play()
+        showDuration()
         
     }
-})
+}
 
-previous.addEventListener('click',(e)=>{
+//previous button
+function previousbtn(){
     if(playlist.childElementCount > 1){
         const crntSong = document.querySelector('.active')
         let prevSong
@@ -131,17 +169,20 @@ previous.addEventListener('click',(e)=>{
         song.pause()
         song.currentTime = 0
         song = new Audio(prevSong.getAttribute('song'))
+        song.volume = 0.5
         crntSong.classList.remove('active')
         prevSong.classList.add('active')
         song.play()
+        showDuration()
         
     }
-})
-
-function playBackground(){
-    const levels = document.querySelector('.display video')
-    levels.play()
-    
-    
-
 }
+
+// volume Adjustment function
+function volume(){
+   const volumebtn = document.getElementById('volume')
+   let maxvol = volumebtn.getAttribute('max')
+   song.volume = parseFloat(volumebtn.value/maxvol)
+}
+
+

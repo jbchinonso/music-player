@@ -18,22 +18,27 @@
             </div>
             <div class="display">
                 <video src="media/horizontal fractal.mp4" class="vidbackground" loop></video>
+                
             </div>
-
+            <div class="mobile-menu"></div>
         </main>
         <section id="player-tools">
             <div id="progressBar">
                 <div class="progress"></div>
             </div>
+            
+
             <div class="controls">
+                <div class="duration"></div>
                 <div class="control-holder">
-                    <input type="button" id="previous"  />
-                    <input type="button" id="play" />
-                    <input type="button" id="pause"  />
-                    <input type="button" id="stop"  />
-                    <input type="button" id="next" />
+                    <input type="button" id="previous" onclick="previousbtn()" />
+                    <input type="button" id="play" onclick="playbtn()" />
+                    <input type="button" id="pause" onclick="pausebtn()" />
+                    <input type="button" id="stop" onclick="stopbtn()" />
+                    <input type="button" id="next" onclick="nextbtn()"/>
                     <input type="button" id="mute" />
-                    <input type="range" id="volume" min="0" max="10"/>
+                    <input type="button" id="ummute" />
+                    <input type="range" id="volume" min="0" max="10" onchange="volume()"/>
                 </div>
                 
             </div>
