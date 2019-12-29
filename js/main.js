@@ -187,7 +187,7 @@ function volume(){
 
 //show the playlist when mobile menu button is clicked
 const menubtn = document.querySelector('.mobile-menu')
-const sidebar = document.querySelector('.sidebar')
 menubtn.addEventListener('click',()=>{
+    const sidebar = document.querySelector('.sidebar')
     sidebar.classList.toggle('visible')
 })
