@@ -185,4 +185,9 @@ function volume(){
    song.volume = parseFloat(volumebtn.value/maxvol)
 }
 
-
+//show the playlist when mobile menu button is clicked
+const menubtn = document.querySelector('.mobile-menu')
+menubtn.addEventListener('click',()=>{
+    const sidebar = document.querySelector('.sidebar')
+    sidebar.classList.toggle('visible')
+})

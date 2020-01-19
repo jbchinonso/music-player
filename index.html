@@ -10,7 +10,7 @@
    <!--<input id="getAudio" type="file" value="Add Song" accept="mp3"> -->
    <div id="container">
         <main id="tray">
-            <div class="sidebar">
+            <div class="sidebar visible">
                 <div class="logo">Sound Camp <span class="logo-span">Music Player</span></div>
                 <input id="getAudio" type="file"  accept="audio/*">
                 <label for="getAudio" class="addSong">Add a Song</label>
@@ -36,7 +36,6 @@
                     <input type="button" id="pause" onclick="pausebtn()" />
                     <input type="button" id="stop" onclick="stopbtn()" />
                     <input type="button" id="next" onclick="nextbtn()"/>
-                    <input type="button" id="mute" />
                     <input type="button" id="ummute" />
                     <input type="range" id="volume" min="0" max="10" onchange="volume()"/>
                 </div>
