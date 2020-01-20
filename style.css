@@ -175,10 +175,21 @@ input#ummute{
     margin-left: 5px;
 }
 
-input#volume{
+input#volume::range-track{
     width: 100px;
-    height: 30px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid rgb(235, 9, 9);
     
+}
+
+input#volume::range-thumb{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #fff;
+    border: 2px solid lemonchiffon;
 }
 
 .mobile-menu{
@@ -187,6 +198,26 @@ input#volume{
 .vidbackground{
     width: 100%;
     height: 100%;
+    
+}
+.pictureTag{
+    width:30%;
+    height: auto;
+    margin: 0 auto;
+    margin-top: -80vh;
+    
+}
+
+.pictureTag img{
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+}
+
+.song-title{
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
 }
 @media only screen and (max-width: 769px){
     .sidebar{
@@ -228,62 +259,81 @@ input#volume{
 
     .controls{
         width: 100%;
-        height: 90px;
+        height: 95px;
         margin: 10px 0px 0px 0px;
         background: #ffffff;
         border-radius: 0;
     }
     .duration{
         height: 80px;
-        width: 39%;
+        width: 10%;
         text-align: center;
         float: left;
-        margin: 0px 0 0 0px;
+        margin: 0px 0 0 5px;
+        line-height: 81px;
+        
        
     }
 
     .control-holder{
-        width: 60%;
+        width: 88%;
         height: 80px;
         float: right;
         padding: 0px;
     }
     
     input#previous{
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin: 20px 0px;
     }
     input#play{
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin: 20px 0px ;
     }
     input#pause{
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin: 20px 0px ;
     }
     input#stop{
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin: 20px 0px ;
     }
     input#next{
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin: 20px 0px ;
     }
     
     input#ummute{
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         margin: 15px 0px 10px 5px ;
     }
     
     input#volume{
-        width: 80px;
+        width: 100px;
         height: 30px;
         margin: 15px 0px 10px 0px ;
+    }
+    .pictureTag{
+        width:70%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .pictureTag img{
+        width: 100%;
+        height: auto;
+        margin-top: 50px;
+    }
+
+    .song-title{
+        color: #fff;
+        font-size: 18px;
+        margin-top: 10px;
     }
 }
