@@ -1,3 +1,4 @@
+
 let file, song, reader
 
 let playlist = document.getElementById('playlist');
@@ -20,12 +21,15 @@ addSong.addEventListener('change', function(e){
             playlist.appendChild(item)
             if(playlist.childElementCount === 1){
                 initialiazer(file,audioFile)
-               
+                songtags()
             }
 
             if(playlist.childElementCount > 1){
-               selectSong();
+                selectSong();
+                findtags(file)
+               
             }
+            
             addSong.value = '';
             
         }   
@@ -34,22 +38,22 @@ addSong.addEventListener('change', function(e){
         
     }  
    
-
+    
 })
 
 
 function initialiazer(file, audioFile){
-    reader = new FileReader()
+    playlist.firstChild.classList.add('active')
+    play.style.display = 'none'
+    pause.style.display = 'inline'
     song = new Audio(audioFile)
     song.volume = 0.5
     song.play()
-    play.style.display = 'none'
-    pause.style.display = 'inline'
-    playlist.firstChild.classList.add('active')
     //play background video while song plays
     levels.play()
     //show the song duration
     showDuration()
+    
 }
 
 
@@ -64,12 +68,15 @@ function selectSong(){
             song.currentTime = 0
             song = new Audio(track.getAttribute('song'))
             song.volume = 0.5
-            song.play()
+            song.play();
+            //set the track tags
+            document.querySelector('.song-title').textContent = track.dataset.title
            // track.previousSibling.classList.remove('active')
             document.querySelector('.active').classList.remove('active')
             track.classList.add('active')
+            showDuration()
+            setTags(track)
             
-
         })
     })
 }
@@ -111,8 +118,10 @@ function stopbtn(){
     song.currentTime = 0
     play.style.display = 'inline'
     pause.style.display = 'none'
-    
+    document.querySelector('.progress').style.width = 0
 }
+
+
 
 //play button
 function playbtn(){
@@ -151,7 +160,7 @@ function nextbtn(){
         nextSong.classList.add('active')
         song.play()
         showDuration()
-        
+        songtags()
     }
 }
 
@@ -174,7 +183,7 @@ function previousbtn(){
         prevSong.classList.add('active')
         song.play()
         showDuration()
-        
+        songtags()
     }
 }
 
@@ -191,3 +200,67 @@ menubtn.addEventListener('click',()=>{
     const sidebar = document.querySelector('.sidebar')
     sidebar.classList.toggle('visible')
 })
+
+//fetch the ID3 tags of the song with jsmediatags library
+//const jsmediatags = require("jsmediatags")
+function findtags(musicfile){
+    const tracks = document.querySelectorAll('.track')
+    const jsmediatags = window.jsmediatags
+
+    jsmediatags.read(musicfile, {
+        onSuccess: function(tags){
+            tracks.forEach(track => {
+                let picture = tags.tags.picture
+            if(picture){
+                let base64String = ''
+                for(let i = 0; i < picture.data.length; i++){
+                    base64String += String.fromCharCode(picture.data[i])
+                }
+                const imgSrc = 'data:'+ picture.format + ';base64,' + window.btoa(base64String);
+                track.dataset.picture = imgSrc
+            }
+           
+                track.dataset.title = tags.tags.title
+                track.dataset.artist = tags.tags.artist
+                track.dataset.album = tags.tags.album
+            
+            })
+           
+            
+        },
+        onError: function(error){
+            console.log(error.type,error.info)
+        
+        }
+    })
+}
+
+function setTags(track){
+    document.querySelector('.pictureTag img').src = track.dataset.picture
+    document.querySelector('.song-title').textContent = track.dataset.title + ' || ' 
+            + track.dataset.artist + ' || ' + track.dataset.album
+}
+
+function songtags(){
+    const myfile = document.querySelector('.active').getAttribute('song')
+    fetch(myfile).then(resp => resp.blob())
+   .then(data => 
+    jsmediatags.read(data,{
+        onSuccess: function(tags){
+            let picture = tags.tags.picture
+            if(picture){
+                let base64String = ''
+                for(let i = 0; i < picture.data.length; i++){
+                    base64String += String.fromCharCode(picture.data[i])
+                }
+                const imgSrc = 'data:'+ picture.format + ';base64,' + window.btoa(base64String);
+                document.querySelector('.pictureTag img').src = imgSrc
+            }
+            document.querySelector('.song-title').textContent = tags.tags.title + ' || ' 
+            + tags.tags.artist + ' || ' + tags.tags.album
+            //console.log(tags.tags)
+        }
+
+    })
+   )
+}
